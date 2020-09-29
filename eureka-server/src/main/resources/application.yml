@@ -1,0 +1,20 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: eureka-server #指定服务名称
+eureka:
+  instance:
+    hostname: replica1 #指定主机地址
+  client:
+    fetch-registry: false # 是否从自身拉取注册信息
+    register-with-eureka: false # 是否将自己也注册到其他eureka节点上。一般设置为true或者默认即可，这样才会在eureka控制台上看到所有的eureka集群列表信息
+    service-url:
+      # 注册到另一个注册中心/当做为eureka服务器时，不能不写defaultZone，
+      # 因为defaultZone有默认设置http://localhost:8761/eureka/,不写会不断的连接8761端口，所以需要覆盖默认的defaultZone
+      defaultZone: http://replica1:8010/eureka
+  server:
+    # eureka 的自我保护状态：心跳失败的比例，在15分钟内是否超过85%,如果出现了超过的情况，
+    # Eureka Server会将当前的实例注册信息保护起来，同时提示一个警告，一旦进入保护模式，
+    # Eureka Server将会尝试保护其服务注册表中的信息，不再删除服务注册表中的数据。也就是不会注销任何微服务
+    enable-self-preservation: false #关闭保护模式

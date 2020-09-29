@@ -1,0 +1,26 @@
+server:
+  port: 8601
+spring:
+  application:
+    name: feign-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://replica1:8010/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500
+
+logging:
+  level:
+    com.waymap.cloud.feignservice.service.UserService: debug
